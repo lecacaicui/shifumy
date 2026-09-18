@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <!-- css pris de "https://freefrontend.com/css-3d-buttons/" -->
+    <style>
+        :root {
+          --backgroundColor: rgba(246, 241, 209);
+          --colorShadeA: rgb(106, 163, 137);
+          --colorShadeB: rgb(121, 186, 156);
+          --colorShadeC: rgb(150, 232, 195);
+          --colorShadeD: rgb(187, 232, 211);
+          --colorShadeE: rgb(205, 255, 232);
+        }
+
+        @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
+        
+        * {
+          box-sizing: border-box;
+        }
+        *::before,
+        *::after {
+          box-sizing: border-box;
+        }
+        
+        body {
+          font-family: "OpenSans", sans-serif;
+          font-size: 1rem;
+          line-height: 1.5;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0;
+          min-height: 100vh;
+          background: var(--backgroundColor);
+        }
+
+        /* Conteneur principal pour tout centrer verticalement */
+        .game-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;
+          padding: 20px;
+        }
+
+        /* Conteneur pour espacer les boutons */
+        .buttons-group {
+          display: flex;
+          gap: 15px;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        button {
+          position: relative;
+          display: inline-block;
+          cursor: pointer;
+          outline: none;
+          border: 0;
+          vertical-align: middle;
+          text-decoration: none;
+          font-size: 1.2rem;
+          color: var(--colorShadeA);
+          font-weight: 700;
+          text-transform: uppercase;
+          font-family: inherit;
+        }
+
+        button.big-button {
+          padding: 0.8em 1.5em;
+          border: 2px solid var(--colorShadeA);
+          border-radius: 1em;
+          background: var(--colorShadeE);
+          transform-style: preserve-3d;
+          transition: all 175ms cubic-bezier(0, 0, 1, 1);
+        }
+        
+        button.big-button::before {
+          position: absolute;
+          content: "";
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: var(--colorShadeC);
+          border-radius: inherit;
+          box-shadow: 0 0 0 2px var(--colorShadeB), 0 0.75em 0 0 var(--colorShadeA);
+          transform: translate3d(0, 0.75em, -1em);
+          transition: all 175ms cubic-bezier(0, 0, 1, 1);
+        }
+
+        button.big-button:hover {
+          background: var(--colorShadeD);
+          transform: translate(0, 0.375em);
+        }
+
+        button.big-button:hover::before {
+          transform: translate3d(0, 0.75em, -1em);
+        }
+
+        button.big-button:active {
+          transform: translate(0em, 0.75em);
+        }
+
+        button.big-button:active::before {
+          transform: translate3d(0, 0, -1em);
+          box-shadow: 0 0 0 2px var(--colorShadeB), 0 0.25em 0 0 var(--colorShadeB);
+        }
+
+        /* Style des zones de texte pour s'accorder au thème */
+        .info-text {
+          font-size: 1.25rem;
+          color: var(--colorShadeA);
+          font-weight: 700;
+          text-align: center;
+          margin: 5px 0;
+        }
+    </style>
+
+</head>
+<body>
+
+    <button class="big-button" id="btn-pierre">Pierre</button>
+    <button class="big-button" id="btn-cisaux">Ciseaux</button>
+    <button class="big-button" id="btn-feuille">Feuille</button>
+
+    
+
+    <p class="info-text" id="choix_ia2">En attente de ton choix...</p>
+    <p class="info-text" id="resultat">En attente de ton choix...</p>
+
+    <script>
+
+        const boutonPierre = document.getElementById("btn-pierre");
+        const boutonCiseaux = document.getElementById("btn-cisaux");
+        const boutonFeuille = document.getElementById("btn-feuille");
+
+        const zoneResultat = document.getElementById("resultat");
+        const zoneChoixIa = document.getElementById("choix_ia2");
+
+        boutonPierre.addEventListener("click", function() {
+        combat(0);
+        });
+
+        boutonCiseaux.addEventListener("click", function() {
+        combat(1);
+        });
+
+        boutonFeuille.addEventListener("click", function() {
+         combat(2);
+        
+        });
+
+        function combat(choix){
+            choix_ia = Math.floor(Math.random()*3);
+
+            zoneChoixIa.textContent = "   Votre choix => "+chiffre_sybol(choix)+" | Choix adversaire => "+chiffre_sybol(choix_ia);
+
+            if (choix == choix_ia){
+                zoneResultat.textContent = "Egalite !";
+            }else if(choix==0 && choix_ia == 1){
+                zoneResultat.textContent = "C'est gagné !";
+            }else if(choix==1 && choix_ia == 2){
+                zoneResultat.textContent = "C'est gagné !";
+            }else if(choix==2 && choix_ia == 0){
+                zoneResultat.textContent = "C'est gagné !";
+            }else{
+                zoneResultat.textContent = "C'est perdu !";
+            }
+            return 0
+        }
+
+        function chiffre_sybol(x){
+
+            if(x == 0){
+                return "🪨"
+            }else if(x == 1){
+                return "✂️"
+            }else{
+                return "📜"
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>
